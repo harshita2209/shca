@@ -11,7 +11,7 @@ public enum ErrorInfo {
 	   private final String errorMessage;
 	   private  final String errorCode;
 	   
-	   ErrorInfo(String errorCode,String errorMessage)
+	   ErrorInfo(String errorMessage,String errorCode)
 	   {
 		   this.errorCode=errorCode;
 		   this.errorMessage=errorMessage;

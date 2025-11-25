@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 @Validated
 @CrossOrigin
 @RequiredArgsConstructor

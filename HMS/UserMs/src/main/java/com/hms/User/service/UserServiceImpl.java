@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.hms.User.constant.ErrorInfo;
 import com.hms.User.dto.UserDTO;
-import com.hms.User.entity.UserEntity;
+import com.hms.User.entity.User;
 import com.hms.User.exception.HMSException;
 import com.hms.User.repositoryDao.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Service
+@Service("iserService")
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 	private  final UserRepository userRepository;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void registerUser(UserDTO userDTO) throws HMSException
 	{
-		Optional<UserEntity> opt=userRepository.findByEmail(userDTO.getEmail());
+		Optional<User> opt=userRepository.findByEmail(userDTO.getEmail());
 		if(opt.isPresent())
 		{
 			throw new HMSException(ErrorInfo.USER_ALREADY_EXISTS.getErrorCode(),ErrorInfo.USER_ALREADY_EXISTS.getErrorMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDTO loginUser(UserDTO userDTO) throws HMSException
 	{
-		UserEntity user=userRepository.findByEmail(userDTO.getEmail()).orElseThrow(()->new HMSException(ErrorInfo.USER_NOT_FOUND.getErrorCode(),ErrorInfo.USER_NOT_FOUND.getErrorMessage(),HttpStatus.INTERNAL_SERVER_ERROR));
+		User user=userRepository.findByEmail(userDTO.getEmail()).orElseThrow(()->new HMSException(ErrorInfo.USER_NOT_FOUND.getErrorCode(),ErrorInfo.USER_NOT_FOUND.getErrorMessage(),HttpStatus.INTERNAL_SERVER_ERROR));
 		if(!passwordEncoder.matches(userDTO.getPassword(), user.getPassword()))
 		{
 			throw new HMSException(ErrorInfo.INVALID_CREDENTIALS.getErrorCode(),ErrorInfo.INVALID_CREDENTIALS.getErrorMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,6 +56,11 @@ public class UserServiceImpl implements UserService{
 	public void updateUser(UserDTO userDTO)
 	{
 		
+	}
+
+	@Override
+	public UserDTO getUser(String email) throws HMSException{
+		return userRepository.findByEmail(email).orElseThrow(() -> new HMSException(ErrorInfo.USER_NOT_FOUND.getErrorCode(), ErrorInfo.USER_NOT_FOUND.getErrorMessage(), HttpStatus.INTERNAL_SERVER_ERROR)).toDTO();
 	}
 	
 
