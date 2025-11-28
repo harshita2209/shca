@@ -43,7 +43,8 @@ public class GlobalExceptionHandler {
               ConstraintViolationException cve=(ConstraintViolationException) e;
               errorMsg =cve.getConstraintViolations().stream().map(ConstraintViolation::getMessage ).collect(Collectors.joining(","));
             }
-            ErrorInfo error=new ErrorInfo(errorMsg,HttpStatus.BAD_REQUEST.value());
+            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(), errorMsg);
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
           }
 
 }

@@ -2,6 +2,8 @@ package com.hms.User.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,13 +18,20 @@ public class SecurityConfig {
 	{
 		return new BCryptPasswordEncoder();
 	}
+
+	@Bean
+	AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception{
+		return builder.getAuthenticationManager();
+		
+	}
+
 	
 	@Bean
 	public SecurityFilterChain sercurityFilterChain(HttpSecurity http) throws Exception
 	{
-		http.authorizeRequests((requests)->requests.requestMatchers("/**").permitAll().anyRequest().authenticated());
-		http.csrf().disable();
-		return http.build();
+		// http.authorizeRequests((requests)->requests.requestMatchers("/**").permitAll().anyRequest().authenticated());
+		// http.csrf().disable();
+		return http.csrf().disable().authorizeHttpRequests(auth->auth.requestMatchers(request->"SECRET".equals(request.getHeader("X-Secret-Key"))).permitAll().anyRequest().denyAll()).build();
 	}
 
 }
