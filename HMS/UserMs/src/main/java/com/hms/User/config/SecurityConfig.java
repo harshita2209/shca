@@ -31,7 +31,8 @@ public class SecurityConfig {
 	{
 		// http.authorizeRequests((requests)->requests.requestMatchers("/**").permitAll().anyRequest().authenticated());
 		// http.csrf().disable();
-		return http.csrf().disable().authorizeHttpRequests(auth->auth.requestMatchers(request->"SECRET".equals(request.getHeader("X-Secret-Key"))).permitAll().anyRequest().denyAll()).build();
+		return http.csrf().disable().authorizeHttpRequests((requests)->requests.requestMatchers("/user/login", "/user/register").permitAll().anyRequest().denyAll()).build();
+		// return http.csrf().disable().authorizeHttpRequests(auth->auth.requestMatchers(request->"SECRET".equals(request.getHeader("X-Secret-Key"))).permitAll().anyRequest().denyAll()).build();
 	}
 
 }

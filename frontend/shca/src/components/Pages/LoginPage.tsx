@@ -1,10 +1,19 @@
 import { Button, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconHeartbeat } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../Service/UserService";
+import { setJwt } from "../../Slices/JwtSlice";
+import { errorNotification, successNotification } from "../../Utility/NotificationUtil";
+import { setUser } from "../../Slices/UserSlice";
 
 const LoginPage = () => {
-
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const [loading,setLoading]=useState(false);
     const form = useForm({
         
     initialValues: {
@@ -19,8 +28,21 @@ const LoginPage = () => {
   });
 
   const handleSubmit= (values: typeof form.values)=>{
-    console.log(values);
-  }
+    setLoading(true);
+    loginUser(values).then((_data)=>{
+        successNotification("Logged in Successfully.");
+   
+        dispatch(setJwt(_data));
+        dispatch(setUser(jwtDecode(_data)));
+    
+      
+      navigate("/");
+    })
+    .catch((error)=>{
+      errorNotification(error?.response?.data?.errorMessage);
+    })
+    .finally(()=>setLoading(false));
+  };
 
 
 
@@ -44,7 +66,7 @@ const LoginPage = () => {
                     <div className='self-center font-medium text-5xl pb-5  font-heading text-light '>Login</div>
                     <TextInput {... form.getInputProps('email')} variant="unstyled" size="md" radius="md" placeholder="Email" />
                     <PasswordInput {... form.getInputProps('password')} variant="unstyled" size="md" radius="md" placeholder="Password" />
-                    <Button radius="md" size="md" type='submit' color="pink">Login</Button>
+                    <Button loading={loading} radius="md" size="md" type='submit' color="pink">Login</Button>
                     <div className="text-neutral-100 text-sm">
                         Don't have a account? <Link to="/register" className="hover:underline">Register</Link>
                     </div>

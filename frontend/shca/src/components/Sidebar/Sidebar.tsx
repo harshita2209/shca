@@ -1,5 +1,6 @@
 import { Avatar, Text } from "@mantine/core";
 import { IconCalendarCheck, IconHeartbeat, IconLayoutGrid, IconMoodHeart, IconStethoscope, IconVaccine } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 
@@ -27,6 +28,7 @@ const links=[
 
 
 const Sidebar = () => {
+   const user=useSelector((state:any)=> state.user);
   return (
     // fixed width sidebar that doesn't shrink; add padding for appearance
     <div>
@@ -47,8 +49,8 @@ const Sidebar = () => {
       <div className='p-1 bg-white rounded-full shadow-lg '>
        <Avatar className="rounded-full" radius="xl" size="xl" src="avatar.png" alt="Ram" />
        </div>
-       <span className='font-medium text-light'> Ramavatar</span>
-       <Text c="dimmed" className="text-light" size="xs">Admin</Text>
+       <span className='font-medium text-light'> {user.name}</span>
+       <Text c="dimmed" className="text-light" size="xs">{user.role}</Text>
       </div>
       <div className="flex flex-col gap-1">
         {

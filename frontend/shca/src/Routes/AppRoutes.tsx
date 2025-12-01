@@ -3,13 +3,14 @@ import First from '../components/Home/First'
 import LoginPage from '../components/Pages/LoginPage'
 import Random from '../components/Pages/Random'
 import RegisterPage from '../components/Pages/RegisterPage'
+import PublicRoute from './PublicRoute'
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+            <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
             <Route path="/" element={<First />} >
                 <Route path="/dashboards" element={<Random />} />
                 <Route path="/pharmacys" element={<Random />} />

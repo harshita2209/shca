@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-
-import java.nio.charset.StandardCharsets;
 
 @Component
 public class TokenFilter extends AbstractGatewayFilterFactory<TokenFilter.Config>{

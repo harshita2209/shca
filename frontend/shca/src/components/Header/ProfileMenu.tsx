@@ -7,13 +7,15 @@ import {
   IconSettings,
   IconTrash,
 } from '@tabler/icons-react';
+import { useSelector } from 'react-redux';
 
 const ProfileMenu=()=> {
+   const user=useSelector((state : any)=> state.user);
   return (
     <Menu shadow="md" offset={12} width={200} withinPortal>
       <Menu.Target>
         <div className='flex items-center gap-3 cursor-pointer'>
-            <span className='font-medium text-lg text-neutral-900'>Ram</span>
+            <span className='font-medium text-lg text-neutral-900'>{user.name}</span>
          <Avatar radius="xl" size="md" src="avatar.png" alt="Ram" />
         </div>
 
