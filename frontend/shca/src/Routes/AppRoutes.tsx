@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import First from '../components/Home/First'
-import LoginPage from '../components/Pages/LoginPage'
-import Random from '../components/Pages/Random'
-import RegisterPage from '../components/Pages/RegisterPage'
+
+import LoginPage from '../Pages/LoginPage'
+import Random from '../Pages/Random'
+import RegisterPage from '../Pages/RegisterPage'
+import ProtectedRoute from './ProtectedRoute'
 import PublicRoute from './PublicRoute'
+import AdminDashboard from '../Layout/AdminDashboard'
 
 const AppRoutes = () => {
   return (
@@ -11,7 +13,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
-            <Route path="/" element={<First />} >
+            <Route path="/" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} >
                 <Route path="/dashboards" element={<Random />} />
                 <Route path="/pharmacys" element={<Random />} />
                 <Route path="/patients" element={<Random />} />

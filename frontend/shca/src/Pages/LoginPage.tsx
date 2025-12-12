@@ -5,10 +5,10 @@ import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../Service/UserService";
-import { setJwt } from "../../Slices/JwtSlice";
-import { errorNotification, successNotification } from "../../Utility/NotificationUtil";
-import { setUser } from "../../Slices/UserSlice";
+import { loginUser } from "../Service/UserService";
+import { setJwt } from "../Slices/JwtSlice";
+import { setUser } from "../Slices/UserSlice";
+import { errorNotification, successNotification } from "../Utility/NotificationUtil";
 
 const LoginPage = () => {
   const dispatch=useDispatch();

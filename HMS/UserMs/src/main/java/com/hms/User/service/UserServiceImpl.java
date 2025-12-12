@@ -2,6 +2,7 @@ package com.hms.User.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,19 @@ import com.hms.User.entity.User;
 import com.hms.User.exception.HMSException;
 import com.hms.User.repositoryDao.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@Service("iserService")
+@Service("userService")
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
+	@Autowired
 	private  final UserRepository userRepository;
+	@Autowired
 	private final PasswordEncoder passwordEncoder;
+	@Autowired
+	private final ApiService apiService;
 //	public final UserEntity userEntity;
 	@Override
 	public void registerUser(UserDTO userDTO) throws HMSException
@@ -29,6 +36,8 @@ public class UserServiceImpl implements UserService{
 			throw new HMSException(ErrorInfo.USER_ALREADY_EXISTS.getErrorCode(),ErrorInfo.USER_ALREADY_EXISTS.getErrorMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		Long profileId=apiService.addProfile(userDTO).block();
+		userDTO.setProfileId(profileId);
 		userRepository.save(userDTO.toEntity());
 	}
 	

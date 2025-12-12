@@ -1,10 +1,10 @@
-import Header from '../Header/Header';
-import Sidebar from '../Sidebar/Sidebar';
+import Header from '../components/Header/Header';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 
 
 
-const First = () => {
+const AdminDashboard = () => {
   return (
     // make container a full-height flex row so children can flex as expected
     <div className='flex'>
@@ -16,4 +16,4 @@ const First = () => {
   )
 }
 
-export default First;
+export default AdminDashboard;

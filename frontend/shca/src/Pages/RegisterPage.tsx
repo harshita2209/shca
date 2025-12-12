@@ -2,8 +2,8 @@ import { Button, PasswordInput, SegmentedControl, TextInput } from "@mantine/cor
 import { useForm } from "@mantine/form";
 import { IconHeartbeat } from "@tabler/icons-react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../../Service/UserService";
-import { errorNotification, successNotification } from "../../Utility/NotificationUtil";
+import { registerUser } from "../Service/UserService";
+import { errorNotification, successNotification } from "../Utility/NotificationUtil";
 
 
 const RegisterPage = () => {
